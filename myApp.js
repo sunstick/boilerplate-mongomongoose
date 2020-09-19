@@ -96,7 +96,7 @@ var createAndSavePerson = function (done) {
       "noodle"
     ]
   });
-  ben.save(function (err, data) {
+  ben.save((err, data) => {
     if (err) {
       console.error(err);
     } else {
@@ -117,9 +117,13 @@ var createAndSavePerson = function (done) {
 // Note: You can reuse the model you instantiated in the previous exercise.
 
 var createManyPeople = function (arrayOfPeople, done) {
-
-  done(null/*, data*/);
-
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      done(null, data);
+    }
+  })
 };
 
 /** # C[R]UD part II - READ #
