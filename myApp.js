@@ -45,7 +45,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  age: { type: Number, min: 18, max: 65 },
+  age: { type: Number, min: 0, max: 100 },
   favoriteFoods: [String]
 });
 
@@ -138,9 +138,13 @@ var createManyPeople = function (arrayOfPeople, done) {
 // Use the function argument `personName` as search key.
 
 var findPeopleByName = function (personName, done) {
-
-  done(null/*, data*/);
-
+  Person.find({ name: personName }, (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      done(null, data);
+    }
+  })
 };
 
 /** 6) Use `Model.findOne()` */
@@ -153,9 +157,13 @@ var findPeopleByName = function (personName, done) {
 // argument `food` as search key
 
 var findOneByFood = function (food, done) {
-
-  done(null/*, data*/);
-
+  Person.findOne({ favoriteFoods: food }, (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      done(null, data);
+    }
+  })
 };
 
 /** 7) Use `Model.findById()` */
@@ -168,8 +176,14 @@ var findOneByFood = function (food, done) {
 // Use the function argument 'personId' as search key.
 
 var findPersonById = function (personId, done) {
-
-  done(null/*, data*/);
+  console.log(personId)
+  Person.findById(personId, (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      done(null, data);
+    }
+  })
 
 };
 
