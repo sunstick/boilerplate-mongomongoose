@@ -307,9 +307,14 @@ var removeManyPeople = function (done) {
 // passing the `done(err, data)` callback to it.
 
 var queryChain = function (done) {
-  var foodToSearch = "burrito";
-
-  done(null/*, data*/);
+  const foodToSearch = "burrito";
+  Person.find({ favoriteFoods: foodToSearch })
+    .sort({ name: 1 })
+    .limit(2)
+    .select("name favoriteFoods").exec((err, data) => {
+      if (err) return console.error(err);
+      done(null, data);
+    })
 };
 
 /** **Well Done !!**
